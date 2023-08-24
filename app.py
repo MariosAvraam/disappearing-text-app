@@ -1,10 +1,13 @@
 import tkinter as tk
 from tkinter import Text, Label, filedialog
+import pygame.mixer
+
 
 class DisappearingTextApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Disappearing Text App")
+        pygame.mixer.init()
 
         # Initialize values
         self.countdown_running = False # Boolean to check if the timer is running
@@ -95,6 +98,7 @@ class DisappearingTextApp:
             color = "goldenrod"
         else:
             color = "red"
+            self.play_timer_tick_sound()
         
         self.timer_label.config(fg=color)
 
@@ -108,6 +112,8 @@ class DisappearingTextApp:
                 self.root.after(1000, self.countdown)
             else:
                 self.text_widget.delete(1.0, tk.END)
+
+                self.play_end_tick_sound()
 
                 # Disable the "Start" button and enable the "Pause" button
                 self.start_button.config(state=tk.DISABLED)
@@ -158,3 +164,11 @@ class DisappearingTextApp:
     def toggle_fullscreen(self):
         """Toggle fullscreen mode."""
         self.root.attributes("-fullscreen", not self.root.attributes("-fullscreen"))
+
+    def play_timer_tick_sound(self):
+        pygame.mixer.music.load("./sound_alerts/timer.mp3")
+        pygame.mixer.music.play()
+
+    def play_end_tick_sound(self):
+        pygame.mixer.music.load("./sound_alerts/end.mp3")
+        pygame.mixer.music.play()
