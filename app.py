@@ -84,6 +84,7 @@ class DisappearingTextApp:
         self.reset_timer()
         self.countdown_running = True
         self.text_widget.config(state=tk.NORMAL)
+        self.text_widget.focus_set()
         self.countdown()
 
         # Disable the "Start" button and enable the "Pause" button
