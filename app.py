@@ -75,9 +75,9 @@ class DisappearingTextApp:
             else:
                 self.text_widget.delete(1.0, tk.END)
 
-                # Enable the "Start" button and disable the "Pause" button
-                self.start_button.config(state=tk.NORMAL)
-                self.pause_button.config(state=tk.DISABLED)
+                # Disable the "Start" button and enable the "Pause" button
+                self.start_button.config(state=tk.DISABLED)
+                self.pause_button.config(state=tk.NORMAL)
 
     def start_countdown(self):
         """Start or resume the countdown."""
