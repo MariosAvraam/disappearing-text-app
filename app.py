@@ -7,9 +7,9 @@ class DisappearingTextApp:
         self.root.title("Disappearing Text App")
 
         # Initialize values
-        self.countdown_running = False
+        self.countdown_running = False # Boolean to check if the timer is running
         self.timer_duration = 5  # Default timer duration
-        self.remaining_time = self.timer_duration
+        self.remaining_time = self.timer_duration # Time left on the timer. Initially set to timer_duration
         
         # Set up the GUI
         self.setup_gui()
