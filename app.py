@@ -44,13 +44,17 @@ class DisappearingTextApp:
 
         self.reset_timer()
 
+        # Disable the text widget initially
+        self.text_widget.config(state=tk.DISABLED)
+
     def on_key(self, event):
         """Callback when a key is pressed. Reset and potentially restart the timer."""
-        if self.remaining_time == 0:
-            self.reset_timer()
-            self.countdown()
-        else:
-            self.reset_timer()
+        if self.countdown_running:
+            if self.remaining_time == 0:
+                self.reset_timer()
+                self.countdown()
+            else:
+                self.reset_timer()
 
     def reset_timer(self):
         """Reset the countdown timer to the specified duration."""
@@ -73,12 +77,15 @@ class DisappearingTextApp:
 
     def start_countdown(self):
         """Start or resume the countdown."""
+        self.reset_timer()
         self.countdown_running = True
+        self.text_widget.config(state=tk.NORMAL)
         self.countdown()
 
     def pause_countdown(self):
         """Pause the countdown."""
         self.countdown_running = False
+        self.text_widget.config(state=tk.DISABLED)
 
     def change_timer_duration(self, event):
         """Change the timer duration based on user selection."""
