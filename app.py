@@ -23,46 +23,61 @@ class DisappearingTextApp:
 
     def setup_gui(self):
         """Set up the GUI components."""
-        # Text widget for user input
-        self.text_widget = Text(self.root, wrap=tk.WORD, height=20, width=50)
-        self.text_widget.pack(pady=20, padx=20)
-        self.text_widget.bind("<KeyRelease>", self.on_key)
+        
+        # Define the font sizes
+        large_font = ("Arial", 16)
+        medium_font = ("Arial", 14)
+        small_font = ("Arial", 12)
+
+        # Top Frame for Timer, Word Count & Dropdown
+        top_frame = tk.Frame(self.root)
+        top_frame.pack(pady=10, padx=20, fill=tk.X, anchor=tk.N)
+
+        # Timer Label
+        self.timer_label = Label(top_frame, text="", font=medium_font)
+        self.timer_label.pack(side=tk.LEFT, padx=10)
+
+        # Word Count Label
+        self.word_count_label = tk.Label(top_frame, text="", font=medium_font)
+        self.word_count_label.pack(side=tk.LEFT, padx=10)
 
         # Dropdown for timer duration
         timer_options = [5, 10, 15, 20]
         self.timer_var = tk.StringVar(self.root)
-        self.timer_var.set(timer_options[0])  # default value
-        timer_dropdown = tk.OptionMenu(self.root, self.timer_var, *timer_options, command=self.change_timer_duration)
-        timer_dropdown.pack(pady=10)
+        self.timer_var.set(timer_options[0])
+        timer_dropdown = tk.OptionMenu(top_frame, self.timer_var, *timer_options, command=self.change_timer_duration)
+        timer_dropdown.config(font=small_font)
+        timer_dropdown.pack(side=tk.RIGHT, padx=10)
+
+        # Text widget for user input
+        self.text_widget = Text(self.root, wrap=tk.WORD, height=20, width=50, font=large_font)
+        self.text_widget.pack(pady=20, padx=20, fill=tk.BOTH, expand=True)
+        self.text_widget.bind("<KeyRelease>", self.on_key)
+
+        # Bottom Frame for Buttons
+        bottom_frame = tk.Frame(self.root)
+        bottom_frame.pack(pady=10, padx=20, fill=tk.X, anchor=tk.S)
 
         # Start and Pause buttons
-        self.start_button = tk.Button(self.root, text="Start", command=self.start_countdown)
-        self.start_button.pack(pady=10, side=tk.LEFT, padx=5)
+        self.start_button = tk.Button(bottom_frame, text="Start", command=self.start_countdown, font=medium_font)
+        self.start_button.pack(side=tk.LEFT, padx=5)
 
-        self.pause_button = tk.Button(self.root, text="Pause", command=self.pause_countdown)
-        self.pause_button.pack(pady=10, side=tk.LEFT, padx=5)
-
-        # Label for timer
-        self.timer_label = Label(self.root, text="")
-        self.timer_label.pack(pady=20)
+        self.pause_button = tk.Button(bottom_frame, text="Pause", command=self.pause_countdown, font=medium_font)
+        self.pause_button.pack(side=tk.LEFT, padx=5)
 
         # Save button
-        save_button = tk.Button(self.root, text="Save", command=self.save_content)
-        save_button.pack(pady=10, side=tk.LEFT, padx=5)
+        save_button = tk.Button(bottom_frame, text="Save", command=self.save_content, font=medium_font)
+        save_button.pack(side=tk.LEFT, padx=5)
 
         # Fullscreen toggle button
-        fullscreen_button = tk.Button(self.root, text="Toggle Fullscreen", command=self.toggle_fullscreen)
-        fullscreen_button.pack(pady=10, side=tk.LEFT, padx=5)
-
-        # Label for word count
-        self.word_count_label = tk.Label(self.root, text="")
-        self.word_count_label.pack(pady=10)
-        self.update_word_count()
+        fullscreen_button = tk.Button(bottom_frame, text="Toggle Fullscreen", command=self.toggle_fullscreen, font=medium_font)
+        fullscreen_button.pack(side=tk.RIGHT, padx=5)
 
         self.reset_timer()
 
         # Disable the text widget initially
         self.text_widget.config(state=tk.DISABLED)
+
 
     def on_key(self, event):
         """Callback when a key is pressed. Reset and potentially restart the timer."""
