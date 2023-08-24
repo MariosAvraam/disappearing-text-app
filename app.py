@@ -22,7 +22,7 @@ class DisappearingTextApp:
         # Text widget for user input
         self.text_widget = Text(self.root, wrap=tk.WORD, height=20, width=50)
         self.text_widget.pack(pady=20, padx=20)
-        self.text_widget.bind("<Key>", self.on_key)
+        self.text_widget.bind("<KeyRelease>", self.on_key)
 
         # Dropdown for timer duration
         timer_options = [5, 10, 15, 20]
@@ -69,12 +69,12 @@ class DisappearingTextApp:
             else:
                 self.reset_timer()
 
-            # Update the word count every time a key is pressed
-            self.update_word_count()
+        # Update the word count every time a key is pressed
+        self.update_word_count()
 
     def update_word_count(self):
         """Update the word count label."""
-        content = self.text_widget.get(1.0, tk.END)
+        content = self.text_widget.get(1.0, tk.END).strip()
         word_count = len(content.split())
         self.word_count_label.config(text=f"Word Count: {word_count}")
 
