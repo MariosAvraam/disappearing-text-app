@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import Text, Label, filedialog
 import pygame.mixer
+import string
 
 
 class DisappearingTextApp:
@@ -65,15 +66,23 @@ class DisappearingTextApp:
 
     def on_key(self, event):
         """Callback when a key is pressed. Reset and potentially restart the timer."""
-        if self.countdown_running:
-            if self.remaining_time == 0:
-                self.reset_timer()
-                self.countdown()
-            else:
-                self.reset_timer()
 
-        # Update the word count every time a key is pressed
-        self.update_word_count()
+        # List of keysyms for characters that should reset the timer
+        valid_keysyms = set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' + string.punctuation)
+
+        # Check if the keysym is valid or if the character is alphanumeric, punctuation, or space
+        valid_char = event.char in valid_keysyms or event.char.isspace()
+
+        if valid_char:
+            if self.countdown_running:
+                if self.remaining_time == 0:
+                    self.reset_timer()
+                    self.countdown()
+                else:
+                    self.reset_timer()
+
+            # Update the word count every time a key is pressed
+            self.update_word_count()
 
     def update_word_count(self):
         """Update the word count label."""
