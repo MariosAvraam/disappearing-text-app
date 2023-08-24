@@ -62,8 +62,20 @@ class DisappearingTextApp:
         self.update_timer_label()
 
     def update_timer_label(self):
-        """Update the timer label with the remaining time."""
+        """Update the timer label with the remaining time and adjust its color."""
         self.timer_label.config(text=f"Time remaining: {self.remaining_time}s")
+        
+        # Determine the color based on the remaining time
+        fraction = self.remaining_time / self.timer_duration
+        if fraction > 0.5:
+            color = "green"
+        elif fraction > 0.25:
+            color = "yellow"
+        else:
+            color = "red"
+        
+        self.timer_label.config(fg=color)
+
 
     def countdown(self):
         """Handle the countdown logic and text deletion."""
