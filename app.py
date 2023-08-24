@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Text, Label
+from tkinter import Text, Label, filedialog
 
 class DisappearingTextApp:
     def __init__(self, root):
@@ -41,6 +41,10 @@ class DisappearingTextApp:
         # Label for timer
         self.timer_label = Label(self.root, text="")
         self.timer_label.pack(pady=20)
+
+        # Save button
+        save_button = tk.Button(self.root, text="Save", command=self.save_content)
+        save_button.pack(pady=10, side=tk.LEFT, padx=5)
 
         self.reset_timer()
 
@@ -116,3 +120,14 @@ class DisappearingTextApp:
         """Change the timer duration based on user selection."""
         self.timer_duration = int(self.timer_var.get())
         self.reset_timer()
+
+    def save_content(self):
+        """Save the content of the text widget to a file."""
+        # Open a save file dialog
+        file_path = filedialog.asksaveasfilename(defaultextension=".txt", 
+                                                filetypes=[("Text files", "*.txt"), ("All files", "*.*")])
+        
+        # If a file path is provided, write the content of the text widget to the file
+        if file_path:
+            with open(file_path, "w") as file:
+                file.write(self.text_widget.get(1.0, tk.END))
