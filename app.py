@@ -74,7 +74,7 @@ class DisappearingTextApp:
         if fraction > 0.5:
             color = "green"
         elif fraction > 0.25:
-            color = "yellow"
+            color = "goldenrod"
         else:
             color = "red"
         
