@@ -50,6 +50,11 @@ class DisappearingTextApp:
         fullscreen_button = tk.Button(self.root, text="Toggle Fullscreen", command=self.toggle_fullscreen)
         fullscreen_button.pack(pady=10, side=tk.LEFT, padx=5)
 
+        # Label for word count
+        self.word_count_label = tk.Label(self.root, text="")
+        self.word_count_label.pack(pady=10)
+        self.update_word_count()
+
         self.reset_timer()
 
         # Disable the text widget initially
@@ -63,6 +68,15 @@ class DisappearingTextApp:
                 self.countdown()
             else:
                 self.reset_timer()
+
+            # Update the word count every time a key is pressed
+            self.update_word_count()
+
+    def update_word_count(self):
+        """Update the word count label."""
+        content = self.text_widget.get(1.0, tk.END)
+        word_count = len(content.split())
+        self.word_count_label.config(text=f"Word Count: {word_count}")
 
     def reset_timer(self):
         """Reset the countdown timer to the specified duration."""
@@ -98,6 +112,8 @@ class DisappearingTextApp:
                 # Disable the "Start" button and enable the "Pause" button
                 self.start_button.config(state=tk.DISABLED)
                 self.pause_button.config(state=tk.NORMAL)
+
+                self.word_count_label.config(text=f"Word Count: 0")
 
     def start_countdown(self):
         """Start or resume the countdown."""
