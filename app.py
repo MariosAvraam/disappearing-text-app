@@ -123,6 +123,9 @@ class DisappearingTextApp:
 
     def save_content(self):
         """Save the content of the text widget to a file."""
+        self.pause_countdown()
+        self.text_widget.config(state=tk.DISABLED)
+        
         # Open a save file dialog
         file_path = filedialog.asksaveasfilename(defaultextension=".txt", 
                                                 filetypes=[("Text files", "*.txt"), ("All files", "*.*")])
