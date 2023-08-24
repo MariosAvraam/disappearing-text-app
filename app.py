@@ -32,11 +32,11 @@ class DisappearingTextApp:
         timer_dropdown.pack(pady=10)
 
         # Start and Pause buttons
-        start_button = tk.Button(self.root, text="Start", command=self.start_countdown)
-        start_button.pack(pady=10, side=tk.LEFT, padx=5)
+        self.start_button = tk.Button(self.root, text="Start", command=self.start_countdown)
+        self.start_button.pack(pady=10, side=tk.LEFT, padx=5)
 
-        pause_button = tk.Button(self.root, text="Pause", command=self.pause_countdown)
-        pause_button.pack(pady=10, side=tk.LEFT, padx=5)
+        self.pause_button = tk.Button(self.root, text="Pause", command=self.pause_countdown)
+        self.pause_button.pack(pady=10, side=tk.LEFT, padx=5)
 
         # Label for timer
         self.timer_label = Label(self.root, text="")
@@ -75,6 +75,10 @@ class DisappearingTextApp:
             else:
                 self.text_widget.delete(1.0, tk.END)
 
+                # Enable the "Start" button and disable the "Pause" button
+                self.start_button.config(state=tk.NORMAL)
+                self.pause_button.config(state=tk.DISABLED)
+
     def start_countdown(self):
         """Start or resume the countdown."""
         self.reset_timer()
@@ -82,10 +86,18 @@ class DisappearingTextApp:
         self.text_widget.config(state=tk.NORMAL)
         self.countdown()
 
+        # Disable the "Start" button and enable the "Pause" button
+        self.start_button.config(state=tk.DISABLED)
+        self.pause_button.config(state=tk.NORMAL)
+
     def pause_countdown(self):
         """Pause the countdown."""
         self.countdown_running = False
         self.text_widget.config(state=tk.DISABLED)
+
+        # Enable the "Start" button and disable the "Pause" button
+        self.start_button.config(state=tk.NORMAL)
+        self.pause_button.config(state=tk.DISABLED)
 
     def change_timer_duration(self, event):
         """Change the timer duration based on user selection."""
