@@ -46,6 +46,10 @@ class DisappearingTextApp:
         save_button = tk.Button(self.root, text="Save", command=self.save_content)
         save_button.pack(pady=10, side=tk.LEFT, padx=5)
 
+        # Fullscreen toggle button
+        fullscreen_button = tk.Button(self.root, text="Toggle Fullscreen", command=self.toggle_fullscreen)
+        fullscreen_button.pack(pady=10, side=tk.LEFT, padx=5)
+
         self.reset_timer()
 
         # Disable the text widget initially
@@ -125,7 +129,7 @@ class DisappearingTextApp:
         """Save the content of the text widget to a file."""
         self.pause_countdown()
         self.text_widget.config(state=tk.DISABLED)
-        
+
         # Open a save file dialog
         file_path = filedialog.asksaveasfilename(defaultextension=".txt", 
                                                 filetypes=[("Text files", "*.txt"), ("All files", "*.*")])
@@ -134,3 +138,7 @@ class DisappearingTextApp:
         if file_path:
             with open(file_path, "w") as file:
                 file.write(self.text_widget.get(1.0, tk.END))
+
+    def toggle_fullscreen(self):
+        """Toggle fullscreen mode."""
+        self.root.attributes("-fullscreen", not self.root.attributes("-fullscreen"))
